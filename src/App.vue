@@ -2,20 +2,17 @@
   <div id="app">
     <div class="main_container">
       <ul>
-
+        <li>Hello wordl</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: {}
 }
 </script>
 
