@@ -10,7 +10,10 @@
       <button @click="startSearching">cerca</button>
       <ul>
         <li v-for="(movie, i) in movies" :key="i">
-          {{ movie.original_title }}
+          <p>titolo: {{ movie.original_title }}</p>
+          <p>titolo originale: {{ movie.title }}</p>
+          <p>lingua: {{ movie.original_language }}</p>
+          <p>voto: {{ movie.vote_average }}</p>
         </li>
       </ul>
     </div>
@@ -71,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'styles/app.scss';
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
