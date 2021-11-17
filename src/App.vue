@@ -12,7 +12,7 @@
         <li v-for="(movie, i) in movies" :key="i">
           <p>titolo: {{ movie.original_title }}</p>
           <p>titolo originale: {{ movie.title }}</p>
-          <p>lingua: {{ movie.original_language }}</p>
+          <p>lingua: <img :src="flags[movie.original_language]" alt=""></p>
           <p>voto: {{ movie.vote_average }}</p>
         </li>
       </ul>
@@ -30,8 +30,16 @@ export default {
     return {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
       movies: [],
+      flags: {
+        en: '@/assets/en.png',
+        es: '@/assets/es.png',
+        fr: '@/assets/fr.jpg',
+        it: '@/assets/it.png'
+      },
       searchedString: "",
     };
+  },
+  computed: {
   },
   methods: {
     //eseguo la richiesta da axios all'api e popolo l'array "movies" ogni volta che premo enter o clicco su cerca
