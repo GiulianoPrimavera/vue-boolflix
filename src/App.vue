@@ -8,6 +8,8 @@
         @keyup.enter="startSearching"
       />
       <button @click="startSearching">cerca</button>
+      
+      <!-- movies -->
       <ul>
         <h2>Movies</h2>
         <li v-for="(movie, i) in movies" :key="i">
@@ -16,7 +18,7 @@
           <!-- <p>lingua: <img :src="require('@/assets/' + movie.original_language + '.png' || '.jpg')" alt="">{{ flags[movie.original_language] }}</p> -->
           <p>
             <strong>lingua originale:</strong>
-            <img
+            <img class="flag_image"
               :src="
                 !flags[movie.original_language]
                   ? urlGeneric
@@ -26,9 +28,11 @@
             />
           </p>
           <p><strong>voto:</strong> {{ movie.vote_average }}</p>
+          <div class="poster"><img :src="urlBasePoster + 'w342' + movie.poster_path" :alt="movie.title + ' poster'"></div>
         </li>
       </ul>
 
+      <!-- tv series -->
       <ul>
         <h2>TV Shows</h2>
         <li v-for="(show, i) in tvShows" :key="i">
@@ -37,7 +41,7 @@
           <!-- <p>lingua: <img :src="require('@/assets/' + show.original_language + '.png' || '.jpg')" alt="">{{ flags[show.original_language] }}</p> -->
           <p>
             <strong>lingua originale:</strong>
-            <img
+            <img  class="flag_image"
               :src="
                 !flags[show.original_language]
                   ? urlGeneric
@@ -47,6 +51,7 @@
             />
           </p>
           <p><strong>voto:</strong> {{ show.vote_average }}</p>
+          <div class="poster"><img :src="urlBasePoster + 'w342' + show.poster_path" :alt="show.title + ' poster'"></div>
         </li>
       </ul>
     </div>
@@ -74,6 +79,7 @@ export default {
       },
       urlGeneric: require("@/assets/notfound.jpg"),
       searchedString: "",
+      urlBasePoster: "https://image.tmdb.org/t/p/"
     };
   },
   methods: {
@@ -110,7 +116,7 @@ export default {
       //PER LE SERIE
       //eseguo la chiamata axios
       axios
-        //come primo elemento della funzione get metto la prima parte necessaria per la ricerca di films (data dalla documentazione dell'api)
+        //come primo elemento della funzione get metto la prima parte necessaria per la ricerca di serie (data dalla documentazione dell'api)
         .get(this.urlBaseTvShow, {
           //come secondo elemento del get inserisco params (un oggetto nel quale vengono specificati dei parametri, axios "traduce" questi parametri in stringa di ricerca)
           params: {
@@ -118,10 +124,11 @@ export default {
             api_key: this.apiKey,
             //this.searchedString è un v-model inserito nell'input di testo, query è il secondo parametro necessario per la ricerca dei film
             query: this.searchedString,
+            language: "it",
           },
         })
         .then((resp) => {
-          //prendo l'array di risposta dato dall'api e lo inseriso nel mio array movies
+          //prendo l'array di risposta dato dall'api e lo inseriso nel mio array tvShows
           this.tvShows.push(...resp.data.results);
         });
       console.log("array di tv shows", this.tvShows);
