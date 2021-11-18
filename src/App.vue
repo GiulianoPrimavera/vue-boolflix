@@ -27,7 +27,7 @@
               :alt="`${movie.original_language} flag`"
             />
           </p>
-          <p><strong>voto:</strong> {{ movie.vote_average }}</p>
+          <p><strong>voto:</strong> {{ getVote(i) }}</p>
           <div class="poster"><img :src="urlBasePoster + 'w342' + movie.poster_path" :alt="movie.title + ' poster'"></div>
         </li>
       </ul>
@@ -60,7 +60,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "App",
   components: {},
@@ -82,12 +81,20 @@ export default {
       urlBasePoster: "https://image.tmdb.org/t/p/"
     };
   },
+  computed: {
+    //quando faccio le card questa funzione posso inserirla nelle computed
+    /* getVote(i) {
+      return Math.ceil(this.movies[i].vote_average / 2);
+    }, */
+  },
   methods: {
+    getVote(i) {
+      return Math.ceil(this.movies[i].vote_average / 2);
+    },
     //eseguo la richiesta da axios all'api e popolo l'array "movies" ogni volta che premo enter o clicco su cerca
     startSearching() {
       //svuoto l'array all'inizio della funzione
       this.movies = [];
-
       //PER I FILM
       //eseguo la chiamata axios
       axios
@@ -108,11 +115,9 @@ export default {
         });
       console.log("array di film", this.movies);
     
-
     
       //svuoto l'array all'inizio della funzione
       this.tvShows = [];
-
       //PER LE SERIE
       //eseguo la chiamata axios
       axios
@@ -139,7 +144,6 @@ export default {
 
 <style lang="scss">
 @import "styles/app.scss";
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
