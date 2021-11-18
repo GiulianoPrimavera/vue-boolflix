@@ -32,10 +32,10 @@ export default {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
       movies: [],
       flags: {
-        en: '@/assets/en.png',
-        es: '@/assets/es.png',
-        fr: '@/assets/fr.jpg',
-        it: '@/assets/it.png'
+        en: require("@/assets/en.png")/* '@/assets/en.png' */,
+        es: require("@/assets/es.png")/* '@/assets/es.png' */,
+        fr: require("@/assets/fr.jpg")/* '@/assets/fr.jpg' */,
+        it: require("@/assets/it.png")/* '@/assets/it.png' */
       },
       searchedString: "",
     };
