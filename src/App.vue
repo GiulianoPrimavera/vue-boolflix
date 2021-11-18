@@ -18,7 +18,7 @@
           <!-- <p>lingua: <img :src="require('@/assets/' + movie.original_language + '.png' || '.jpg')" alt="">{{ flags[movie.original_language] }}</p> -->
           <p>
             <strong>lingua originale:</strong>
-            <img class="flag_image"
+            <img :class="flags[movie.original_language] ? 'flag_image' : 'lang_not_found'"
               :src="
                 !flags[movie.original_language]
                   ? urlGeneric
