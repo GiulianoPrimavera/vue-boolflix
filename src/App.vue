@@ -5,95 +5,36 @@
         type="text"
         placeholder="cerca un film"
         v-model="searchedString"
-        @keyup.enter="usaLaSearch"
+        @keyup.enter="search"
       />
-      <button @click="usaLaSearch">cerca</button>
+      <button @click="search">cerca</button>
 
       <!-- movies -->
       <ul>
         <h2>Movies</h2>
         <Card
-          v-for="(movie, i) in movies"
+          v-for="(film, i) in movies"
           :key="i"
-          :title="movie.title"
-          :original_title="movie.original_title"
-          :original_language="movie.original_language"
-          :poster_path="movie.poster_path"
+          :title="film.title"
+          :original_title="film.original_title"
+          :original_language="film.original_language"
+          :poster_path="film.poster_path"
+          :vote_average="film.vote_average"
         ></Card>
-        <!-- <li v-for="(movie, i) in movies" :key="i">
-          <p><strong>titolo:</strong> {{ movie.title }}</p>
-          <p><strong>titolo originale:</strong> {{ movie.original_title }}</p>
-          <p>
-            <strong>lingua originale:</strong>
-            <img :class="flags[movie.original_language] ? 'flag_image' : 'lang_not_found'"
-              :src="
-                !flags[movie.original_language]
-                  ? urlGeneric
-                  : flags[movie.original_language]
-              "
-              :alt="`${movie.original_language} flag`"
-            /> 
-            <span v-if="!flags[movie.original_language]">{{movie.original_language}}</span>
-          </p>
-          <p><strong>voto:</strong> 
-            <i class="fa-star" v-for="number in 5" :key="number"
-              :class="number > getVoteMovie(i) ? 'far' : 'fas'"
-            ></i>
-            {{ getVoteMovie(i) }}
-          </p>
-          <div class="poster"><img :src="urlBasePoster + 'w342' + movie.poster_path" :alt="movie.title + ' poster'"></div>
-        </li> -->
       </ul>
 
       <!-- tv series -->
       <ul>
         <h2>TV Shows</h2>
         <Card
-          v-for="(movie, i) in tvShows"
+          v-for="(film, i) in tvShows"
           :key="i"
-          :name="movie.name"
-          :original_name="movie.original_name"
-          :original_language="movie.original_language"
-          :poster_path="movie.poster_path"
+          :name="film.name"
+          :original_name="film.original_name"
+          :original_language="film.original_language"
+          :poster_path="film.poster_path"
+          :vote_average="film.vote_average"
         ></Card>
-        <!-- <li v-for="(show, i) in tvShows" :key="i">
-          <p><strong>titolo:</strong> {{ show.name }}</p>
-          <p><strong>titolo originale:</strong> {{ show.original_name }}</p>
-          <p>
-            <strong>lingua originale:</strong>
-            <img
-              :class="
-                flags[show.original_language] ? 'flag_image' : 'lang_not_found'
-              "
-              :src="
-                !flags[show.original_language]
-                  ? urlGeneric
-                  : flags[show.original_language]
-              "
-              :alt="`${show.original_language} flag`"
-            />
-            <span v-if="!flags[show.original_language]">{{
-              show.original_language
-            }}</span>
-          </p>
-          <p>
-            <strong>voto:</strong> -->
-        <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
-        <!-- <i
-              class="fa-star"
-              v-for="number in 5"
-              :key="number"
-              :class="number > getVoteShow(i) ? 'far' : 'fas'"
-            ></i>
-            {{ getVoteShow(i) }}
-          </p>
-          <div class="poster">
-            <img
-              :src="urlBasePoster + 'w342' + show.poster_path"
-              :alt="show.title + ' poster'"
-            />
-          </div>
-        </li>-->
       </ul>
     </div>
   </div>
@@ -113,21 +54,10 @@ export default {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
       movies: [],
       tvShows: [],
-      /*  flags: {
-        en: require("@/assets/en.png"),
-        es: require("@/assets/es.png"),
-        fr: require("@/assets/fr.jpg"),
-        it: require("@/assets/it.png"),
-      },
-      urlGeneric: require("@/assets/notfound.jpg"), */
       searchedString: "",
-      /* urlBasePoster: "https://image.tmdb.org/t/p/" */
     };
   },
   methods: {
-    getVoteShow(i) {
-      return Math.ceil(this.tvShows[i].vote_average / 2);
-    },
     genericSearch(baseUrl, stringaDaCercare, genericArray) {
       axios
         .get(baseUrl, {
@@ -140,7 +70,7 @@ export default {
           this[genericArray] = resp.data.results;
         });
     },
-    usaLaSearch() {
+    search() {
       this.genericSearch(
         "https://api.themoviedb.org/3/search/movie?",
         this.searchedString,
