@@ -24,7 +24,6 @@
           :key="number"
           :class="number > getVoteFilms ? 'far' : 'fas'"
         ></i>
-        {{ getVoteFilms }}
       </p>
       <div class="poster">
         <img
