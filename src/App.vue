@@ -5,9 +5,9 @@
         type="text"
         placeholder="cerca un film"
         v-model="searchedString"
-        @keyup.enter="startSearching"
+        @keyup.enter="usaLaSearch"
       />
-      <button @click="startSearching">cerca</button>
+      <button @click="usaLaSearch">cerca</button>
       
       <!-- movies -->
       <ul>
@@ -46,7 +46,7 @@
           <p><strong>titolo originale:</strong> {{ show.original_name }}</p>
           <p>
             <strong>lingua originale:</strong>
-            <img  class="flag_image"
+            <img  :class="flags[show.original_language] ? 'flag_image' : 'lang_not_found'"
               :src="
                 !flags[show.original_language]
                   ? urlGeneric
@@ -103,69 +103,21 @@ export default {
     getVote(i) {
       return Math.ceil(this.movies[i].vote_average / 2);
     },
-    //eseguo la richiesta da axios all'api e popolo l'array "movies" ogni volta che premo enter o clicco su cerca
-    startSearching() {
-      //svuoto l'array all'inizio della funzione
-      this.movies = [];
-      //PER I FILM
-      //eseguo la chiamata axios
-      axios
-        //come primo elemento della funzione get metto la prima parte necessaria per la ricerca di films (data dalla documentazione dell'api)
-        .get(this.urlBaseMovie, {
-          //come secondo elemento del get inserisco params (un oggetto nel quale vengono specificati dei parametri, axios "traduce" questi parametri in stringa di ricerca)
-          params: {
-            //this.apiKey è la chiave data dall'api
-            api_key: this.apiKey,
-            //this.searchedString è un v-model inserito nell'input di testo, query è il secondo parametro necessario per la ricerca dei film
-            query: this.searchedString,
-            language: "it",
-          },
-        })
-        .then((resp) => {
-          //prendo l'array di risposta dato dall'api e lo inseriso nel mio array movies
-          this.movies.push(...resp.data.results);
-        });
-      console.log("array di film", this.movies);
-    
-    
-      //svuoto l'array all'inizio della funzione
-      this.tvShows = [];
-      //PER LE SERIE
-      //eseguo la chiamata axios
-      axios
-        //come primo elemento della funzione get metto la prima parte necessaria per la ricerca di serie (data dalla documentazione dell'api)
-        .get(this.urlBaseTvShow, {
-          //come secondo elemento del get inserisco params (un oggetto nel quale vengono specificati dei parametri, axios "traduce" questi parametri in stringa di ricerca)
-          params: {
-            //this.apiKey è la chiave data dall'api
-            api_key: this.apiKey,
-            //this.searchedString è un v-model inserito nell'input di testo, query è il secondo parametro necessario per la ricerca dei film
-            query: this.searchedString,
-            language: "it",
-          },
-        })
-        .then((resp) => {
-          //prendo l'array di risposta dato dall'api e lo inseriso nel mio array tvShows
-          this.tvShows.push(...resp.data.results);
-        });
-      console.log("array di tv shows", this.tvShows);
-    },
-    /* genericSearch(genericArray, url, stringaDaCercare){
-      genericArray= []
+    genericSearch(baseUrl, stringaDaCercare, genericArray){
 
-      axios. get(url, {
+      axios.get(baseUrl, {
         params: {
           api_key: this.apiKey,
           query: stringaDaCercare
         }
       }).then((resp) => {
-        genericArray.push(...resp.data.results)
+        this[genericArray] = resp.data.results
       })
     },
     usaLaSearch(){
-      this.genericSearch(this.movies, this.urlBaseMovie, this.searchedString)
-      this.genericSearch(this.tvShows, this.urlBaseTvShows, this.searchedString)
-    } */
+      this.genericSearch("https://api.themoviedb.org/3/search/movie?", this.searchedString, "movies")
+      this.genericSearch("https://api.themoviedb.org/3/search/tv?", this.searchedString, "tvShows")
+    }
   }
 };
 </script>
