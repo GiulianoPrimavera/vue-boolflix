@@ -12,11 +12,13 @@
       <!-- movies -->
       <ul>
         <h2>Movies</h2>
-        <Card v-for="(movie, i) in movies" :key="i"
-        :title="movie.title"
-        :original_title="movie.original_title"
-        :original_language="movie.original_language"
-        :poster_path="movie.poster_path"
+        <Card
+          v-for="(movie, i) in movies"
+          :key="i"
+          :title="movie.title"
+          :original_title="movie.original_title"
+          :original_language="movie.original_language"
+          :poster_path="movie.poster_path"
         ></Card>
         <!-- <li v-for="(movie, i) in movies" :key="i">
           <p><strong>titolo:</strong> {{ movie.title }}</p>
@@ -44,9 +46,17 @@
       </ul>
 
       <!-- tv series -->
-     <!--  <ul>
+      <ul>
         <h2>TV Shows</h2>
-        <li v-for="(show, i) in tvShows" :key="i">
+        <Card
+          v-for="(movie, i) in tvShows"
+          :key="i"
+          :name="movie.name"
+          :original_name="movie.original_name"
+          :original_language="movie.original_language"
+          :poster_path="movie.poster_path"
+        ></Card>
+        <!-- <li v-for="(show, i) in tvShows" :key="i">
           <p><strong>titolo:</strong> {{ show.name }}</p>
           <p><strong>titolo originale:</strong> {{ show.original_name }}</p>
           <p>
@@ -68,8 +78,8 @@
           </p>
           <p>
             <strong>voto:</strong> -->
-            <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
-            <!-- <i
+        <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
+        <!-- <i
               class="fa-star"
               v-for="number in 5"
               :key="number"
@@ -83,21 +93,21 @@
               :alt="show.title + ' poster'"
             />
           </div>
-        </li>
-      </ul> -->
+        </li>-->
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Card from "./components/Card.vue"
+import Card from "./components/Card.vue";
 
 export default {
   name: "App",
   components: {
-    Card
-    },
+    Card,
+  },
   data() {
     return {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
@@ -118,22 +128,31 @@ export default {
     getVoteShow(i) {
       return Math.ceil(this.tvShows[i].vote_average / 2);
     },
-    genericSearch(baseUrl, stringaDaCercare, genericArray){
-
-      axios.get(baseUrl, {
-        params: {
-          api_key: this.apiKey,
-          query: stringaDaCercare
-        }
-      }).then((resp) => {
-        this[genericArray] = resp.data.results
-      })
+    genericSearch(baseUrl, stringaDaCercare, genericArray) {
+      axios
+        .get(baseUrl, {
+          params: {
+            api_key: this.apiKey,
+            query: stringaDaCercare,
+          },
+        })
+        .then((resp) => {
+          this[genericArray] = resp.data.results;
+        });
     },
-    usaLaSearch(){
-      this.genericSearch("https://api.themoviedb.org/3/search/movie?", this.searchedString, "movies")
-      this.genericSearch("https://api.themoviedb.org/3/search/tv?", this.searchedString, "tvShows")
-    }
-  }
+    usaLaSearch() {
+      this.genericSearch(
+        "https://api.themoviedb.org/3/search/movie?",
+        this.searchedString,
+        "movies"
+      );
+      this.genericSearch(
+        "https://api.themoviedb.org/3/search/tv?",
+        this.searchedString,
+        "tvShows"
+      );
+    },
+  },
 };
 </script>
 
