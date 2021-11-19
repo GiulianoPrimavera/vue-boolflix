@@ -2,33 +2,29 @@
   <div class="single_card">
     <li>
       <p><strong>titolo:</strong> {{ title || name }}</p>
-      <p><strong>titolo originale:</strong> {{ original_title || original_name}}</p>
+      <p>
+        <strong>titolo originale:</strong> {{ original_title || original_name }}
+      </p>
       <p>
         <strong>lingua originale:</strong>
         <img
-          :class="
-            flags[original_language] ? 'flag_image' : 'lang_not_found'
-          "
+          :class="flags[original_language] ? 'flag_image' : 'lang_not_found'"
           :src="
-            !flags[original_language]
-              ? urlGeneric
-              : flags[original_language]
+            !flags[original_language] ? urlGeneric : flags[original_language]
           "
           :alt="`${original_language} flag`"
         />
-        <span v-if="!flags[original_language]">{{
-          original_language
-        }}</span>
+        <span v-if="!flags[original_language]">{{ original_language }}</span>
       </p>
       <p>
         <strong>voto:</strong>
-        <!-- <i
+        <i
           class="fa-star"
           v-for="number in 5"
           :key="number"
-          :class="number > getVoteMovie(i) ? 'far' : 'fas'"
-        ></i> -->
-        <!--  {{ getVoteMovie(i) }} -->
+          :class="number > getVoteFilms ? 'far' : 'fas'"
+        ></i>
+        {{ getVoteFilms }}
       </p>
       <div class="poster">
         <img
@@ -44,12 +40,13 @@
 export default {
   name: "Card",
   props: {
-      title: String,
-      original_title: String,
-      original_language: String,
-      poster_path: String,  
-      name: String,
-      original_name: String
+    title: String,
+    original_title: String,
+    original_language: String,
+    poster_path: String,
+    name: String,
+    original_name: String,
+    vote_average: Number,
   },
   data() {
     return {
@@ -60,10 +57,14 @@ export default {
         it: require("@/assets/it.png"),
       },
       urlGeneric: require("@/assets/notfound.jpg"),
-      urlBasePoster: "https://image.tmdb.org/t/p/"
+      urlBasePoster: "https://image.tmdb.org/t/p/",
     };
   },
-  methods: {},
+  computed: {
+    getVoteFilms() {
+      return Math.ceil(this.vote_average / 2);
+    },
+  }
 };
 </script>
 
