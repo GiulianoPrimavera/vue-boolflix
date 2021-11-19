@@ -15,7 +15,6 @@
         <li v-for="(movie, i) in movies" :key="i">
           <p><strong>titolo:</strong> {{ movie.title }}</p>
           <p><strong>titolo originale:</strong> {{ movie.original_title }}</p>
-          <!-- <p>lingua: <img :src="require('@/assets/' + movie.original_language + '.png' || '.jpg')" alt="">{{ flags[movie.original_language] }}</p> -->
           <p>
             <strong>lingua originale:</strong>
             <img :class="flags[movie.original_language] ? 'flag_image' : 'lang_not_found'"
@@ -25,9 +24,16 @@
                   : flags[movie.original_language]
               "
               :alt="`${movie.original_language} flag`"
-            />
+            /> 
+            <span v-if="!flags[movie.original_language]">{{movie.original_language}}</span>
           </p>
-          <p><strong>voto:</strong> {{ getVote(i) }}</p>
+          <!-- <p><strong>voto:</strong> {{ getVote(i) }}</p> -->
+          <p><strong>voto:</strong> 
+            <i class="fa-star" v-for="number in 5" :key="number"
+              :class="number > getVote(i) ? 'far' : 'fas'"
+            ></i>
+            {{ getVote(i) }}
+          </p>
           <div class="poster"><img :src="urlBasePoster + 'w342' + movie.poster_path" :alt="movie.title + ' poster'"></div>
         </li>
       </ul>
@@ -38,7 +44,6 @@
         <li v-for="(show, i) in tvShows" :key="i">
           <p><strong>titolo:</strong> {{ show.name }}</p>
           <p><strong>titolo originale:</strong> {{ show.original_name }}</p>
-          <!-- <p>lingua: <img :src="require('@/assets/' + show.original_language + '.png' || '.jpg')" alt="">{{ flags[show.original_language] }}</p> -->
           <p>
             <strong>lingua originale:</strong>
             <img  class="flag_image"
@@ -137,7 +142,23 @@ export default {
           this.tvShows.push(...resp.data.results);
         });
       console.log("array di tv shows", this.tvShows);
-    }
+    },
+    /* genericSearch(genericArray, url, stringaDaCercare){
+      genericArray= []
+
+      axios. get(url, {
+        params: {
+          api_key: this.apiKey,
+          query: stringaDaCercare
+        }
+      }).then((resp) => {
+        genericArray.push(...resp.data.results)
+      })
+    },
+    usaLaSearch(){
+      this.genericSearch(this.movies, this.urlBaseMovie, this.searchedString)
+      this.genericSearch(this.tvShows, this.urlBaseTvShows, this.searchedString)
+    } */
   }
 };
 </script>
