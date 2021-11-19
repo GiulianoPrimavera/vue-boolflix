@@ -59,9 +59,9 @@
           <p><strong>voto:</strong> 
           <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
             <i class="fa-star" v-for="number in 5" :key="number"
-              :class="number > getVote(i) ? 'far' : 'fas'"
+              :class="number > getVoteShow(i) ? 'far' : 'fas'"
             ></i>
-            {{ getVote(i) }}
+            {{ getVoteShow(i) }}
           </p>
           <div class="poster"><img :src="urlBasePoster + 'w342' + show.poster_path" :alt="show.title + ' poster'"></div>
         </li>
@@ -78,8 +78,6 @@ export default {
   data() {
     return {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
-      urlBaseMovie: "https://api.themoviedb.org/3/search/movie?",
-      urlBaseTvShow: "https://api.themoviedb.org/3/search/tv?",
       movies: [],
       tvShows: [],
       flags: {
@@ -102,6 +100,9 @@ export default {
   methods: {
     getVote(i) {
       return Math.ceil(this.movies[i].vote_average / 2);
+    },
+    getVoteShow(i) {
+      return Math.ceil(this.tvShows[i].vote_average / 2);
     },
     genericSearch(baseUrl, stringaDaCercare, genericArray){
 
