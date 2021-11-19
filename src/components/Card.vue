@@ -1,8 +1,8 @@
 <template>
   <div class="single_card">
     <li>
-      <p><strong>titolo:</strong> {{ title }}</p>
-      <p><strong>titolo originale:</strong> {{ original_title }}</p>
+      <p><strong>titolo:</strong> {{ title || name }}</p>
+      <p><strong>titolo originale:</strong> {{ original_title || original_name}}</p>
       <p>
         <strong>lingua originale:</strong>
         <img
@@ -48,6 +48,8 @@ export default {
       original_title: String,
       original_language: String,
       poster_path: String,  
+      name: String,
+      original_name: String
   },
   data() {
     return {
