@@ -8,11 +8,17 @@
         @keyup.enter="usaLaSearch"
       />
       <button @click="usaLaSearch">cerca</button>
-      
+
       <!-- movies -->
       <ul>
         <h2>Movies</h2>
-        <li v-for="(movie, i) in movies" :key="i">
+        <Card v-for="(movie, i) in movies" :key="i"
+        :title="movie.title"
+        :original_title="movie.original_title"
+        :original_language="movie.original_language"
+        :poster_path="movie.poster_path"
+        ></Card>
+        <!-- <li v-for="(movie, i) in movies" :key="i">
           <p><strong>titolo:</strong> {{ movie.title }}</p>
           <p><strong>titolo originale:</strong> {{ movie.original_title }}</p>
           <p>
@@ -28,25 +34,27 @@
             <span v-if="!flags[movie.original_language]">{{movie.original_language}}</span>
           </p>
           <p><strong>voto:</strong> 
-          <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
             <i class="fa-star" v-for="number in 5" :key="number"
-              :class="number > getVote(i) ? 'far' : 'fas'"
+              :class="number > getVoteMovie(i) ? 'far' : 'fas'"
             ></i>
-            {{ getVote(i) }}
+            {{ getVoteMovie(i) }}
           </p>
           <div class="poster"><img :src="urlBasePoster + 'w342' + movie.poster_path" :alt="movie.title + ' poster'"></div>
-        </li>
+        </li> -->
       </ul>
 
       <!-- tv series -->
-      <ul>
+     <!--  <ul>
         <h2>TV Shows</h2>
         <li v-for="(show, i) in tvShows" :key="i">
           <p><strong>titolo:</strong> {{ show.name }}</p>
           <p><strong>titolo originale:</strong> {{ show.original_name }}</p>
           <p>
             <strong>lingua originale:</strong>
-            <img  :class="flags[show.original_language] ? 'flag_image' : 'lang_not_found'"
+            <img
+              :class="
+                flags[show.original_language] ? 'flag_image' : 'lang_not_found'
+              "
               :src="
                 !flags[show.original_language]
                   ? urlGeneric
@@ -54,53 +62,59 @@
               "
               :alt="`${show.original_language} flag`"
             />
-            <span v-if="!flags[show.original_language]">{{show.original_language}}</span>
+            <span v-if="!flags[show.original_language]">{{
+              show.original_language
+            }}</span>
           </p>
-          <p><strong>voto:</strong> 
-          <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
-            <i class="fa-star" v-for="number in 5" :key="number"
+          <p>
+            <strong>voto:</strong> -->
+            <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
+            <!-- <i
+              class="fa-star"
+              v-for="number in 5"
+              :key="number"
               :class="number > getVoteShow(i) ? 'far' : 'fas'"
             ></i>
             {{ getVoteShow(i) }}
           </p>
-          <div class="poster"><img :src="urlBasePoster + 'w342' + show.poster_path" :alt="show.title + ' poster'"></div>
+          <div class="poster">
+            <img
+              :src="urlBasePoster + 'w342' + show.poster_path"
+              :alt="show.title + ' poster'"
+            />
+          </div>
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Card from "./components/Card.vue"
+
 export default {
   name: "App",
-  components: {},
+  components: {
+    Card
+    },
   data() {
     return {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
       movies: [],
       tvShows: [],
-      flags: {
-        en: require("@/assets/en.png") /* '@/assets/en.png' */,
-        es: require("@/assets/es.png") /* '@/assets/es.png' */,
-        fr: require("@/assets/fr.jpg") /* '@/assets/fr.jpg' */,
-        it: require("@/assets/it.png") /* '@/assets/it.png' */,
+      /*  flags: {
+        en: require("@/assets/en.png"),
+        es: require("@/assets/es.png"),
+        fr: require("@/assets/fr.jpg"),
+        it: require("@/assets/it.png"),
       },
-      urlGeneric: require("@/assets/notfound.jpg"),
+      urlGeneric: require("@/assets/notfound.jpg"), */
       searchedString: "",
-      urlBasePoster: "https://image.tmdb.org/t/p/"
+      /* urlBasePoster: "https://image.tmdb.org/t/p/" */
     };
   },
-  computed: {
-    //quando faccio le card questa funzione posso inserirla nelle computed
-    /* getVote(i) {
-      return Math.ceil(this.movies[i].vote_average / 2);
-    }, */
-  },
   methods: {
-    getVote(i) {
-      return Math.ceil(this.movies[i].vote_average / 2);
-    },
     getVoteShow(i) {
       return Math.ceil(this.tvShows[i].vote_average / 2);
     },
