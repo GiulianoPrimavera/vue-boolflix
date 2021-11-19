@@ -27,8 +27,8 @@
             /> 
             <span v-if="!flags[movie.original_language]">{{movie.original_language}}</span>
           </p>
-          <!-- <p><strong>voto:</strong> {{ getVote(i) }}</p> -->
           <p><strong>voto:</strong> 
+          <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
             <i class="fa-star" v-for="number in 5" :key="number"
               :class="number > getVote(i) ? 'far' : 'fas'"
             ></i>
@@ -54,8 +54,15 @@
               "
               :alt="`${show.original_language} flag`"
             />
+            <span v-if="!flags[show.original_language]">{{show.original_language}}</span>
           </p>
-          <p><strong>voto:</strong> {{ show.vote_average }}</p>
+          <p><strong>voto:</strong> 
+          <!-- se il numero della stella che sta stampando è maggiore del numero dei voti ottenuti allora stampa stelle vuote, altrimenti stelle piene -->
+            <i class="fa-star" v-for="number in 5" :key="number"
+              :class="number > getVote(i) ? 'far' : 'fas'"
+            ></i>
+            {{ getVote(i) }}
+          </p>
           <div class="poster"><img :src="urlBasePoster + 'w342' + show.poster_path" :alt="show.title + ' poster'"></div>
         </li>
       </ul>
