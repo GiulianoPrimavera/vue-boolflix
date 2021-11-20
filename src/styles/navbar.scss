@@ -1,6 +1,11 @@
 .navbar{
     background-color: #000;
-    h1{
+    display: flex;
+    .logo_title{
+        flex-grow: 1;
         color: #ea3323;
+    }
+    .search_bar_container{
+        flex-grow: 0;
     }
 }
