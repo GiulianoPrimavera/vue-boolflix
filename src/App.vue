@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div class="main_container">
 
       <NavBar></NavBar>
 
+      <!-- questa parte di ricerca verrà inserita nel file NavBar.vue -->
       <input
         type="text"
         placeholder="cerca un film"
@@ -12,6 +12,7 @@
       />
       <button @click="search">cerca</button>
 
+    <div class="main_container">
       <!-- movies -->
       <div class="movies_container">
         <h2>Movies</h2>
@@ -24,6 +25,7 @@
             :original_language="film.original_language"
             :poster_path="film.poster_path"
             :vote_average="film.vote_average"
+            :overview="film.overview"
           ></Card>
         </div>
       </div>
@@ -40,6 +42,7 @@
             :original_language="film.original_language"
             :poster_path="film.poster_path"
             :vote_average="film.vote_average"
+            :overview="film.overview"
           ></Card>
         </div>
       </div>
@@ -98,4 +101,6 @@ export default {
 <style lang="scss">
 @import "styles/app.scss";
 @import "styles/navbar.scss";
+@import "styles/main_container.scss";
+@import "styles/single_card.scss";
 </style>
