@@ -2,24 +2,7 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-    .films_container{
-        display: flex;
-        flex-wrap: wrap;
-        .single_card{
-            padding-bottom: 30px;
-            width: calc(100% / 3);
-            p{
-                margin: 0
-            }
-            .flag_image{
-                width: 35px;
-                height: 20px;
-            }
-            .lang_not_found{
-                height: 20px;
-                width: 20px;
-            }
-        }
-    }
+  background-color: #555;
+  height: 100vh;
+  overflow: auto;
 }
