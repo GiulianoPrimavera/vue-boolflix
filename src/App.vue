@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div class="main_container">
+
+      <NavBar></NavBar>
+
       <input
         type="text"
         placeholder="cerca un film"
@@ -10,32 +13,36 @@
       <button @click="search">cerca</button>
 
       <!-- movies -->
-      <ul>
+      <div class="movies_container">
         <h2>Movies</h2>
-        <Card
-          v-for="(film, i) in movies"
-          :key="i"
-          :title="film.title"
-          :original_title="film.original_title"
-          :original_language="film.original_language"
-          :poster_path="film.poster_path"
-          :vote_average="film.vote_average"
-        ></Card>
-      </ul>
+        <div class="films_container">
+          <Card
+            v-for="(film, i) in movies"
+            :key="i"
+            :title="film.title"
+            :original_title="film.original_title"
+            :original_language="film.original_language"
+            :poster_path="film.poster_path"
+            :vote_average="film.vote_average"
+          ></Card>
+        </div>
+      </div>
 
       <!-- tv series -->
-      <ul>
+      <div class="shows_container">
         <h2>TV Shows</h2>
-        <Card
-          v-for="(film, i) in tvShows"
-          :key="i"
-          :name="film.name"
-          :original_name="film.original_name"
-          :original_language="film.original_language"
-          :poster_path="film.poster_path"
-          :vote_average="film.vote_average"
-        ></Card>
-      </ul>
+        <div class="films_container">
+          <Card
+            v-for="(film, i) in tvShows"
+            :key="i"
+            :name="film.name"
+            :original_name="film.original_name"
+            :original_language="film.original_language"
+            :poster_path="film.poster_path"
+            :vote_average="film.vote_average"
+          ></Card>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,11 +50,13 @@
 <script>
 import axios from "axios";
 import Card from "./components/Card.vue";
+import NavBar from "./components/NavBar.vue";
 
 export default {
   name: "App",
   components: {
     Card,
+    NavBar
   },
   data() {
     return {
@@ -88,10 +97,5 @@ export default {
 
 <style lang="scss">
 @import "styles/app.scss";
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
+@import "styles/navbar.scss";
 </style>
