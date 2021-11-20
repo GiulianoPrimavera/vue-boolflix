@@ -1,5 +1,5 @@
 .single_card{
-    padding-bottom: 30px;
+    margin-bottom: 30px;
     width: calc(100% / 3);
     overflow: hidden;
     position: relative;
@@ -14,11 +14,15 @@
     }
     .description{
         position: absolute;
+        width: 100%;
+        height: 100%;
         text-align: center;
         display: flex;
         flex-direction: column;
         gap: 30px;
         padding: 50px;
+        opacity: 0;
+        transition: .5s;
     }
     .poster{
         height: 100%;
@@ -26,6 +30,25 @@
             object-fit: cover;
             height: 100%;
             width: 100%;
+        }
+    }
+    &::before{
+        content: "";
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.0);
+        display: inline-block;
+        position: absolute;
+        transition: 0.5s;
+    }
+    &:hover{
+        .description{
+            opacity: 1;
+        }
+        &::before{
+            background-color: rgba(0, 0, 0, 0.7);
         }
     }
 }
