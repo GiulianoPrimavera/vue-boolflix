@@ -1,29 +1,28 @@
 <template>
   <div class="single_card">
-    <p><strong>titolo:</strong> {{ title || name }}</p>
-    <p>
-      <strong>titolo originale:</strong> {{ original_title || original_name }}
-    </p>
-    <p>
-      <strong>lingua originale:</strong>
-      <img
-        :class="flags[original_language] ? 'flag_image' : 'lang_not_found'"
-        :src="
-          !flags[original_language] ? urlGeneric : flags[original_language]
-        "
-        :alt="`${original_language} flag`"
-      />
-      <span v-if="!flags[original_language]">{{ original_language }}</span>
-    </p>
-    <p>
-      <strong>voto:</strong>
-      <i
-        class="fa-star"
-        v-for="number in 5"
-        :key="number"
-        :class="number > getVoteFilms ? 'far' : 'fas'"
-      ></i>
-    </p>
+    <div class="description">
+      <h2>{{ title || name }}</h2>
+      <h3>{{ original_title || original_name }}</h3>
+      <p>
+        <img
+          :class="flags[original_language] ? 'flag_image' : 'lang_not_found'"
+          :src="
+            !flags[original_language] ? urlGeneric : flags[original_language]
+          "
+          :alt="`${original_language} flag`"
+        />
+        <span v-if="!flags[original_language]">{{ original_language }}</span>
+      </p>
+      <p>
+        <i
+          class="fa-star"
+          v-for="number in 5"
+          :key="number"
+          :class="number > getVoteFilms ? 'far' : 'fas'"
+        ></i>
+      </p>
+      <p>{{ overview }}</p>
+    </div>
     <div class="poster">
       <img
         :src="urlBasePoster + 'w342' + poster_path"
@@ -44,6 +43,7 @@ export default {
     name: String,
     original_name: String,
     vote_average: Number,
+    overview: String,
   },
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
     getVoteFilms() {
       return Math.ceil(this.vote_average / 2);
     },
-  }
+  },
 };
 </script>
 
