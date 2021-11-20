@@ -1,0 +1,31 @@
+.single_card{
+    padding-bottom: 30px;
+    width: calc(100% / 3);
+    overflow: hidden;
+    position: relative;
+    color: white;
+    .flag_image{
+        width: 35px;
+        height: 20px;
+    }
+    .lang_not_found{
+        height: 20px;
+        width: 20px;
+    }
+    .description{
+        position: absolute;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 50px;
+    }
+    .poster{
+        height: 100%;
+        img{
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
