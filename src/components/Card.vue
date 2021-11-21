@@ -1,5 +1,5 @@
 <template>
-  <div class="single_card">
+  <div class="single_card"  :class="poster_path === null ? 'poster_null' : ''">
     <div class="description">
       <h2>{{ title || name }}</h2>
       <h3>{{ original_title || original_name }}</h3>
@@ -24,8 +24,9 @@
       <p><strong>Trama</strong><br>{{ overview }}</p>
     </div>
     <div class="poster">
+        <!-- :src="urlBasePoster + 'w342' + poster_path" -->
       <img
-        :src="urlBasePoster + 'w342' + poster_path"
+        :src="getPoster"
         :alt="title + ' poster'"
       />
     </div>
@@ -55,13 +56,19 @@ export default {
       },
       urlGeneric: require("@/assets/notfound.jpg"),
       urlBasePoster: "https://image.tmdb.org/t/p/",
+      posterWidth: "w342"
     };
   },
   computed: {
     getVoteFilms() {
       return Math.ceil(this.vote_average / 2);
     },
+    getPoster(){
+      return this.urlBasePoster + this.posterWidth + this.poster_path
+    }
   },
+  methods: {
+  }
 };
 </script>
 

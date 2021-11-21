@@ -31,6 +31,7 @@
             height: 100%;
             width: 100%;
         }
+        
     }
     &::before{
         content: "";
@@ -49,6 +50,24 @@
         }
         &::before{
             background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+    /* se poster_path ritorna un valore null, la single_card avrà questa classe,
+       poster_null mostra la panoramica del film senza bisogno di hover
+    */
+    &.poster_null{
+        &::before{
+        content: "";
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0);
+        display: inline-block;
+        position: absolute;
+        }
+        .description{
+            opacity: 1;
         }
     }
 }
