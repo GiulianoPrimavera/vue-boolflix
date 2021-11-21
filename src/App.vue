@@ -1,16 +1,6 @@
 <template>
   <div id="app">
-
-      <NavBar></NavBar>
-
-      <!-- questa parte di ricerca verrà inserita nel file NavBar.vue -->
-      <input
-        type="text"
-        placeholder="cerca un film"
-        v-model="searchedString"
-        @keyup.enter="search"
-      />
-      <button @click="search">cerca</button>
+    <NavBar :genericSearch="genericSearch"></NavBar>
 
     <div class="main_container">
       <!-- movies -->
@@ -59,14 +49,14 @@ export default {
   name: "App",
   components: {
     Card,
-    NavBar
+    NavBar,
   },
   data() {
     return {
       apiKey: "cd46b1fc41160a5e0f5ace06fece242a",
       movies: [],
       tvShows: [],
-      searchedString: "",
+      /* searchedString: "", */
     };
   },
   methods: {
@@ -81,18 +71,6 @@ export default {
         .then((resp) => {
           this[genericArray] = resp.data.results;
         });
-    },
-    search() {
-      this.genericSearch(
-        "https://api.themoviedb.org/3/search/movie?",
-        this.searchedString,
-        "movies"
-      );
-      this.genericSearch(
-        "https://api.themoviedb.org/3/search/tv?",
-        this.searchedString,
-        "tvShows"
-      );
     },
   },
 };
