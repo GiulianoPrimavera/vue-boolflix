@@ -21,7 +21,7 @@
           :class="number > getVoteFilms ? 'far' : 'fas'"
         ></i>
       </p>
-      <p>{{ overview }}</p>
+      <p><strong>Trama</strong><br>{{ overview }}</p>
     </div>
     <div class="poster">
       <img
